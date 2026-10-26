@@ -1,0 +1,15 @@
+import { ArrowRight, BadgeCheck, PackageCheck, ShieldCheck, Sparkles, Truck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../app/hooks';
+import { ProductCard } from '../components/ProductCard';
+
+export default function HomePage() {
+  const products = useAppSelector(s => s.products.items);
+  const featured = products.filter(p => p.featured).slice(0, 4);
+  return <>
+    <section className="hero container"><div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line"/> შენი სტილი. შენი არჩევანი.</div><h1>ტექნოლოგია,<br/><em>რომელიც</em><br/>შენ გერგება<span className="accent-point">.</span></h1><p>აღმოაჩინე განსაკუთრებული გაჯეტები და თანამედროვე აქსესუარები. ის, რასაც ყოველდღე სიამოვნებით გამოიყენებ.</p><div className="hero-buttons"><Link className="btn btn-dark btn-large" to="/products">შეარჩიე პროდუქტი <ArrowRight size={18}/></Link><Link className="text-link" to="/products/new">დაამატე შენი <ArrowRight size={16}/></Link></div><div className="hero-trust"><div className="avatar-stack"><span>ა</span><span>გ</span><span>მ</span></div><div><strong>100% ყურადღებით შერჩეული</strong><small>გამორჩეული არჩევანი შენთვის</small></div></div></div><div className="hero-visual"><div className="hero-image-glow"></div><span className="hero-decor hero-decor-one">✳</span><span className="hero-decor hero-decor-two">✦</span><div className="hero-floating top-floating"><Sparkles size={18}/> ახალი კოლექცია <span>2026</span></div><img src="/products/headphones.svg" alt="Studio Pro უსადენო ყურსასმენი"/><div className="hero-floating bottom-floating"><div className="float-avatar"><BadgeCheck size={23}/></div><div><strong>Studio Pro</strong><small>გამორჩეული ხმა, ყოველ დღე</small></div><ArrowRight size={17}/></div><div className="hero-bottom-text">SOUND, REIMAGINED — 001</div></div></section>
+    <section className="container perks"><div><Truck size={22}/><span><strong>მარტივი მიწოდება</strong><small>შეარჩიე და გამოიწერე</small></span></div><div><ShieldCheck size={22}/><span><strong>ხარისხიანი არჩევანი</strong><small>ყურადღებით შერჩეული</small></span></div><div><PackageCheck size={22}/><span><strong>მოხერხებული შეკვეთა</strong><small>რამდენიმე მარტივი ნაბიჯი</small></span></div></section>
+    <section className="container section-block"><div className="section-top"><div><span className="section-eyebrow">✳ აღმოჩენები</span><h2>შენი ახალი ფავორიტები</h2><p>თანამედროვე დიზაინი და ჭკვიანი შესაძლებლობები.</p></div><Link to="/products" className="text-link">ყველა პროდუქტი <ArrowRight size={18}/></Link></div><div className="product-grid">{featured.map(p => <ProductCard key={p.id} product={p}/>)}</div></section>
+    <section className="container mid-banner"><div className="banner-star">✳</div><div><span className="section-eyebrow">VELA COMMUNITY</span><h2>კარგი არჩევანი<br/>შენგან იწყება.</h2><p>გახდი ჩვენი კოლექციის ნაწილი — დაამატე საკუთარი პროდუქტი.</p><Link to="/products/new" className="btn btn-light">დაამატე პროდუქტი <ArrowRight size={17}/></Link></div><span className="mid-banner-number">01 / 03</span></section>
+  </>;
+}
