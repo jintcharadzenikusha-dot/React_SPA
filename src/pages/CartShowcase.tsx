@@ -1,0 +1,6 @@
+import {Link} from 'react-router-dom';
+import {ArrowRight, ShoppingBag} from 'lucide-react';
+import {useAppDispatch,useAppSelector} from '../app/hooks';
+import {addToCart} from '../features/cart/cartSlice';
+import {money} from '../data/products';
+export default function CartShowcase(){const items=useAppSelector(s=>s.products.items);const dispatch=useAppDispatch();return <div className="container page-space"><div className="breadcrumbs"><Link to="/">მთავარი</Link><ArrowRight size={12}/>პროდუქტები</div><div className="catalog-heading"><div><span className="section-eyebrow">შეარჩიე სასურველი</span><h1>ჩვენი კოლექცია<span className="accent-point">.</span></h1><p>დაამატე ნივთები კალათაში და გააფორმე შეკვეთა.</p></div><Link to="/cart" className="btn btn-dark">ჩემი კალათა <ShoppingBag size={17}/></Link></div><div className="product-grid">{items.map(item=><article className="product-card" key={item.id}><div className="product-image-wrap"><img src={item.image} alt={item.name}/></div><div className="product-card-bottom"><div className="product-title">{item.name}</div><div className="product-subtitle">{item.subtitle}</div><div className="product-purchase"><strong>{money(item.price)}</strong><button className="product-add" title="კალათაში დამატება" onClick={()=>dispatch(addToCart(item.id))}><ShoppingBag size={20}/></button></div></div></article>)}</div></div>}
