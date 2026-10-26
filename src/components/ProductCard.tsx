@@ -2,11 +2,14 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Check, ShoppingBag, Star } from 'lucide-react';
 import type { Product } from '../data/products';
 import { money } from '../data/products';
+import { useAppDispatch } from '../app/hooks';
+import { addToCart } from '../features/cart/cartSlice';
 
 
 
 export function ProductCard({ product }: { product: Product }) {
   
+  const dispatch = useAppDispatch();
   return <article className="product-card">
     <Link className="product-image-wrap" to={`/products/${product.id}`} aria-label={`${product.name} — დეტალები`}>
       {product.badge && <span className="product-tag">{product.badge}</span>}
@@ -18,7 +21,7 @@ export function ProductCard({ product }: { product: Product }) {
       <Link to={`/products/${product.id}`} className="product-title">{product.name}</Link>
       <div className="product-subtitle">{product.subtitle}</div>
       <div className="product-purchase"><div className="product-prices"><strong>{money(product.price)}</strong>{product.oldPrice && <s>{money(product.oldPrice)}</s>}</div>
-        <Link className="product-add" to={`/products/${product.id}`} aria-label="პროდუქტის დეტალები"><ArrowUpRight size={20}/></Link>
+        <button type="button" className="product-add" onClick={() => dispatch(addToCart(product.id))} aria-label={`${product.name} კალათაში დამატება`}><ShoppingBag size={20}/></button>
       </div>
     </div>
   </article>;
