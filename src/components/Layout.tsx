@@ -7,7 +7,7 @@ import { setSearch } from '../features/products/productsSlice';
 export function Layout({ children }: { children: React.ReactNode }) {
   const cartCount = 0;
   const search = useAppSelector(s => s.products.search);
-  const activeUser = null;
+  const activeUser = useAppSelector(s => s.auth.activeUserId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,6 +23,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <form className="header-search" onSubmit={e => {e.preventDefault(); navigate('/products');}}><Search size={17}/><input value={search} placeholder="რას ეძებ?" onChange={e => dispatch(setSearch(e.target.value))} aria-label="პროდუქტის ძებნა"/></form>
 
 
+          <Link to={activeUser ? "/profile" : "/login"} className="icon-button" aria-label="ანგარიში"><UserRound size={21}/></Link>
           <button type="button" className="icon-button mobile-menu-toggle" onClick={() => setMobileOpen(v => !v)} aria-label="მენიუს გახსნა" aria-expanded={mobileOpen}>{mobileOpen ? <X size={23}/> : <Menu size={23}/>}</button>
         </div>
       </div>
@@ -32,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <footer className="site-footer"><div className="container footer-grid">
       <div><Link to="/" className="brand footer-logo"><span className="brand-symbol">✳</span> VELA<span className="brand-dot">.</span></Link><p>ყოველდღიური ნივთები, რომლებიც ყოველდღიურობას განსაკუთრებულს ხდის.</p></div>
       <div><h4>აღმოაჩინე</h4><Link to="/products">ყველა პროდუქტი</Link><Link to="/products/new">პროდუქტის დამატება</Link></div>
-      <div><h4>ანგარიში</h4><Link to="/products">კოლექცია</Link></div>
+      <div><h4>ანგარიში</h4><Link to="/profile">პროფილი</Link></div>
       <div><h4>VELA-ს უპირატესობა</h4><span><Package size={16}/> მარტივი შეკვეთა</span><span><Heart size={16}/> რჩეული პროდუქტები</span><span><Headphones size={16}/> მარტივი გამოყენება</span></div>
     </div><div className="container footer-bottom"><span>© {new Date().getFullYear()} VELA. ყველა უფლება დაცულია.</span><span>შენი სტილი. შენი არჩევანი.</span></div></footer>
   </>;
